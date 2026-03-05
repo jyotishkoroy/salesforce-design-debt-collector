@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Access to Design Debt Collector UI and analysis services.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Design Debt Collector</label>
+    <license>Salesforce</license>
+    <userLicense>Salesforce</userLicense>
+    <applicationVisibilities>
+        <application>Lightning</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <tabSettings>
+        <tab>DDC_Design_Debt_Collector</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <classAccesses>
+        <apexClass>DDC_AnalyzerService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DDC_ToolingApiClient</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DDC_Heuristics</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

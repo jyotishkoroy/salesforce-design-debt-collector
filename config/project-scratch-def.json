@@ -1,0 +1,13 @@
+{
+  "orgName": "Design Debt Collector",
+  "edition": "Developer",
+  "features": [],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "orgPreferenceSettings": {
+      "s1DesktopEnabled": true
+    }
+  }
+}

@@ -1,0 +1,94 @@
+<template>
+    <div class="app">
+        <div class="panel">
+            <div class="controls">
+                <lightning-button variant="brand" label="Run analysis" onclick={handleRun} disabled={running}></lightning-button>
+                <lightning-button variant="neutral" label="Export JSON" onclick={exportJson} disabled={noResults}></lightning-button>
+                <lightning-button variant="neutral" label="Export CSV" onclick={exportCsv} disabled={noResults}></lightning-button>
+            </div>
+
+            <template if:true={running}>
+                <div class="status">Analyzing metadata via Tooling API…</div>
+            </template>
+
+            <template if:true={error}>
+                <div class="error">
+                    <div class="error-title">Analysis failed</div>
+                    <div class="error-msg">{error}</div>
+                    <div class="hint">If your org blocks same-org callouts, follow <span class="mono">docs/SETUP.md</span> for the Named Credential fallback.</div>
+                </div>
+            </template>
+
+            <template if:true={results}>
+                <div class="summary">
+                    <div class="stat">
+                        <div class="stat-value">{results.summary.flowsScanned}</div>
+                        <div class="stat-label">Flows scanned</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">{results.summary.apexClassesScanned}</div>
+                        <div class="stat-label">Apex classes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">{results.summary.permissionSetsScanned}</div>
+                        <div class="stat-label">Permission sets</div>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-title">Findings</div>
+                        <template if:true={hasFindings}>
+                            <ul class="list">
+                                <template for:each={results.findings} for:item="f">
+                                    <li class="item" key={f.id}>
+                                        <div class="item-head">
+                                            <span class={"sev sev-"+f.severity}>{f.severity}</span>
+                                            <span class="item-title">{f.title}</span>
+                                        </div>
+                                        <div class="item-detail">{f.detail}</div>
+                                        <div class="item-meta">
+                                            <span class="pill">{f.category}</span>
+                                            <span class="pill mono">{f.target}</span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template if:false={hasFindings}>
+                            <div class="empty">No findings detected by current heuristics.</div>
+                        </template>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Refactor plan (sequenced)</div>
+                        <ul class="timeline">
+                            <template for:each={results.plan} for:item="p">
+                                <li class="tstep" key={p.order}>
+                                    <div class="tbadge">{p.order}</div>
+                                    <div class="tbody">
+                                        <div class="tmain">
+                                            <div class="ttitle">{p.title}</div>
+                                            <div class="trisk">Risk: <span class={"risk risk-"+p.risk}>{p.risk}</span></div>
+                                        </div>
+                                        <div class="trationale">{p.rationale}</div>
+                                        <template if:true={p.actions}>
+                                            <ul class="actions">
+                                                <template for:each={p.actions} for:item="a">
+                                                    <li key={a}>{a}</li>
+                                                </template>
+                                            </ul>
+                                        </template>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <div class="footer-credit">
+                            Public credit: <a href="https://orcid.org/0009-0000-2837-4731" target="_blank" rel="noopener">Jyotishko Roy</a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

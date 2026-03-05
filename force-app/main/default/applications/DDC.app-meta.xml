@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Design Debt Collector - analyzes metadata and generates refactor plans.</description>
+    <label>Design Debt Collector</label>
+    <navType>Standard</navType>
+    <tabs>DDC_Design_Debt_Collector</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>
